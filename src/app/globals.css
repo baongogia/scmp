@@ -24,3 +24,18 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Custom Footer Styles */
+.ant-layout-footer {
+  padding: 0 !important;
+  min-height: 500px !important;
+  height: auto !important;
+  display: block !important;
+}
+
+/* Ensure footer content has proper spacing */
+.ant-layout-footer .max-w-7xl,
+div .max-w-7xl {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}

@@ -1,0 +1,691 @@
+/* Custom animations and styles for modern UI */
+@import "../hooks/notification.scss";
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Floating animation for background elements */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delay-1 {
+  animation: float 6s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.animate-float-delay-2 {
+  animation: float 6s ease-in-out infinite;
+  animation-delay: 4s;
+}
+
+/* Pulse animation for background elements */
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* Gradient animation for buttons */
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Custom shadow effects */
+.shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Glass morphism effect */
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Custom button hover effects */
+.btn-modern {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-modern::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.btn-modern:hover::before {
+  left: 100%;
+}
+
+/* Card hover effects */
+.card-modern {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-modern:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Text gradient effect */
+.text-gradient {
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1e40af;
+}
+
+/* Loading animation */
+.loading-dots {
+  display: inline-block;
+}
+
+.loading-dots::after {
+  content: "";
+  animation: loading-dots 1.5s infinite;
+}
+
+@keyframes loading-dots {
+  0%,
+  20% {
+    content: "";
+  }
+  40% {
+    content: ".";
+  }
+  60% {
+    content: "..";
+  }
+  80%,
+  100% {
+    content: "...";
+  }
+}
+
+/* Responsive text sizes */
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 2.5rem !important;
+    line-height: 1.1 !important;
+  }
+
+  .hero-subtitle {
+    font-size: 1.125rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 3.5rem !important;
+    line-height: 1.1 !important;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem !important;
+  }
+}
+
+/* Custom focus styles */
+.focus-modern:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: #3b82f6;
+}
+
+/* Custom notification styles */
+.custom-notification {
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Custom form styles */
+.form-modern .ant-input {
+  border-radius: 12px !important;
+  border: 2px solid #e5e7eb !important;
+  transition: all 0.3s ease !important;
+}
+
+.form-modern .ant-input:hover {
+  border-color: #3b82f6 !important;
+}
+
+.form-modern .ant-input:focus {
+  border-color: #1e40af !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+.form-modern .ant-btn-primary {
+  border-radius: 12px !important;
+  height: 48px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.form-modern .ant-btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4) !important;
+}
+
+/* Footer fixes */
+footer {
+  position: relative !important;
+  z-index: 10 !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+/* Ensure footer is visible */
+.ant-layout-footer {
+  position: relative !important;
+  z-index: 10 !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+/* Dashboard specific styles */
+.dashboard-tabs {
+  .ant-tabs-nav {
+    margin-bottom: 24px;
+
+    .ant-tabs-tab {
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 8px 8px 0 0;
+      transition: all 0.3s ease;
+
+      @media (min-width: 768px) {
+        padding: 12px 24px;
+        font-size: 16px;
+      }
+
+      &:hover {
+        color: #1890ff;
+        background: rgba(24, 144, 255, 0.05);
+      }
+
+      &.ant-tabs-tab-active {
+        .ant-tabs-tab-btn {
+          color: #1890ff;
+          font-weight: 600;
+        }
+        background: rgba(24, 144, 255, 0.1);
+      }
+    }
+
+    .ant-tabs-ink-bar {
+      height: 3px;
+      background: linear-gradient(90deg, #1890ff, #69c0ff);
+      border-radius: 2px;
+    }
+  }
+}
+
+/* Enhanced card styles for dashboard */
+.dashboard-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  overflow: hidden;
+
+  @media (min-width: 768px) {
+    border-radius: 16px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border-color: #d6f7ff;
+
+    @media (min-width: 768px) {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  .ant-card-head {
+    background: linear-gradient(135deg, #fafbfc, #f0f9ff);
+    border-bottom: 1px solid #e6f7ff;
+    border-radius: 16px 16px 0 0;
+
+    .ant-card-head-title {
+      color: #1890ff;
+      font-weight: 600;
+    }
+  }
+
+  .ant-card-body {
+    padding: 24px;
+  }
+}
+
+/* Stats card specific styling */
+.stats-card {
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #1890ff, #69c0ff);
+  }
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(24, 144, 255, 0.15);
+    border-color: #69c0ff;
+  }
+
+  .stat-icon {
+    background: rgba(24, 144, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+    transition: all 0.3s ease;
+  }
+
+  &:hover .stat-icon {
+    background: rgba(24, 144, 255, 0.2);
+    transform: scale(1.1);
+  }
+}
+
+/* Progress bar enhancements */
+.ant-progress-bg {
+  background: linear-gradient(90deg, #1890ff, #69c0ff) !important;
+}
+
+.ant-progress-success-bg {
+  background: linear-gradient(90deg, #52c41a, #95de64) !important;
+}
+
+/* Table enhancements */
+.dashboard-table {
+  .ant-table {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .ant-table-thead > tr > th {
+    background: linear-gradient(135deg, #fafbfc, #f0f9ff);
+    font-weight: 600;
+    color: #1890ff;
+    border-bottom: 2px solid #e6f7ff;
+  }
+
+  .ant-table-tbody > tr:hover > td {
+    background: #f0f9ff !important;
+  }
+
+  .ant-table-tbody > tr > td {
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+  }
+}
+
+/* Modal enhancements */
+.ant-modal {
+  .ant-modal-content {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  }
+
+  .ant-modal-header {
+    background: linear-gradient(135deg, #f0f9ff, #e6f7ff);
+    border-bottom: 1px solid #d6f7ff;
+    padding: 24px 24px 16px;
+
+    .ant-modal-title {
+      color: #1890ff;
+      font-weight: 600;
+      font-size: 18px;
+    }
+  }
+
+  .ant-modal-body {
+    padding: 24px;
+  }
+
+  .ant-modal-footer {
+    padding: 16px 24px 24px;
+    border-top: 1px solid #f0f0f0;
+  }
+}
+
+/* Button enhancements */
+.ant-btn-primary {
+  background: linear-gradient(135deg, #1890ff, #096dd9);
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, #40a9ff, #1890ff);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(24, 144, 255, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.ant-btn {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* Tag styling */
+.ant-tag {
+  border-radius: 20px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border: none;
+
+  &.ant-tag-blue {
+    background: linear-gradient(135deg, #e6f7ff, #bae7ff);
+    color: #1890ff;
+  }
+}
+
+/* Avatar enhancements */
+.ant-avatar {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Schedule card styling */
+.schedule-card {
+  background: linear-gradient(135deg, #ffffff, #f0f9ff);
+  border-left: 4px solid #1890ff;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-left-color: #40a9ff;
+    background: linear-gradient(135deg, #f0f9ff, #e6f7ff);
+    transform: translateX(4px);
+  }
+}
+
+/* Activity timeline */
+.activity-item {
+  position: relative;
+  padding: 16px 20px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+
+  &:hover {
+    background: linear-gradient(135deg, #f0f9ff, #e6f7ff);
+    transform: translateX(8px);
+    border-color: #d6f7ff;
+    box-shadow: 0 4px 12px rgba(24, 144, 255, 0.1);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #1890ff, #69c0ff);
+    border-radius: 0 2px 2px 0;
+    transition: all 0.3s ease;
+  }
+
+  &:hover::before {
+    width: 5px;
+    background: linear-gradient(180deg, #40a9ff, #87d068);
+  }
+}
+
+/* Loading animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.5s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .stats-card {
+    margin-bottom: 16px;
+
+    &:hover {
+      transform: translateY(-3px);
+    }
+  }
+
+  .dashboard-card {
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  .activity-item {
+    &:hover {
+      transform: translateX(4px);
+    }
+  }
+}
+
+/* Mobile sidebar adjustments */
+@media (max-width: 1024px) {
+  .ant-layout-sider {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+
+    &.ant-layout-sider-collapsed {
+      transform: translateX(0);
+    }
+  }
+}
+
+/* Remove conflicting sidebar positioning - let component handle it */
+
+/* Prevent horizontal overflow */
+.dashboard-content {
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure proper spacing for fixed sidebar */
+.main-content {
+  transition: margin-left 0.3s ease;
+}
+
+@media (min-width: 1024px) {
+  .main-content {
+    margin-left: 250px;
+  }
+
+  .main-content.collapsed {
+    margin-left: 80px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+/* Improved mobile responsiveness */
+@media (max-width: 640px) {
+  .stats-card {
+    .ant-card-body {
+      padding: 16px;
+    }
+
+    .stat-icon {
+      padding: 8px;
+    }
+  }
+
+  .dashboard-card {
+    .ant-card-body {
+      padding: 16px;
+    }
+  }
+
+  .activity-item {
+    padding: 12px 16px;
+  }
+
+  .schedule-card {
+    .ant-card-body {
+      padding: 12px;
+    }
+  }
+}
+
+/* Smooth transitions for layout changes */
+.dashboard-content * {
+  box-sizing: border-box;
+}
+
+/* Ensure text doesn't break layout on small screens */
+.ant-typography h1,
+.ant-typography h2,
+.ant-typography h3,
+.ant-typography h4 {
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* Mobile-first approach for tables */
+@media (max-width: 768px) {
+  .dashboard-table {
+    .ant-table-wrapper {
+      overflow-x: auto;
+    }
+
+    .ant-table {
+      min-width: 600px;
+    }
+  }
+}
+
+/* Improve button spacing on mobile */
+@media (max-width: 640px) {
+  .ant-space-item {
+    margin-bottom: 8px !important;
+  }
+
+  .ant-btn {
+    min-width: auto;
+    padding: 4px 8px;
+    font-size: 12px;
+
+    &.ant-btn-lg {
+      padding: 6px 12px;
+      font-size: 14px;
+    }
+  }
+}
