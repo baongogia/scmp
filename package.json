@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx || true",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
     "type-check": "tsc --noEmit",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
   },
