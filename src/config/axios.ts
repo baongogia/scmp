@@ -75,7 +75,7 @@ api.interceptors.request.use(async function (config) {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  config.headers["X-Tenant-ID"] = "VNCMY";
+  config.headers["X-Tenant-ID"] = "67cabc98c87dc080914265d4";
   return config;
 });
 
