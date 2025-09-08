@@ -205,7 +205,7 @@ export function Footer() {
               <Title level={4} className="text-gray-800 mb-4 font-bold">
                 Hỗ trợ & Liên hệ
               </Title>
-              <div className="space-y-2 mb-4">
+              <div className="space-y-2 mb-4 ">
                 {footerLinks.support.map((link) => (
                   <Link
                     key={link.name}
