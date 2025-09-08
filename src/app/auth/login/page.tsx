@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Form, Input, Button, Card, Alert, Typography, Space } from "antd";
@@ -16,7 +16,7 @@ import { getCookie } from "@/utils/client/getCookie";
 
 const { Title, Text } = Typography;
 
-export default function LoginPage() {
+function LoginForm() {
   const [form] = Form.useForm();
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -263,5 +263,24 @@ export default function LoginPage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-blue-50 to-blue-100">
+          <div className="text-center">
+            <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl flex items-center justify-center shadow-xl mx-auto mb-4">
+              <span className="text-white font-bold text-xl">SC</span>
+            </div>
+            <div className="text-lg text-gray-600">Đang tải...</div>
+          </div>
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }

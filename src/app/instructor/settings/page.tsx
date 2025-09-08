@@ -40,15 +40,10 @@ import {
   MdVisibility,
   MdVisibilityOff,
 } from "react-icons/md";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 
 const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
-
-export default function SettingsPage() {
-  const { user } = useAuth();
-  return <SettingsContent user={user} />;
-}
 
 function SettingsContent({ user }: { user: any }) {
   const [activeTab, setActiveTab] = useState("profile");
@@ -66,7 +61,7 @@ function SettingsContent({ user }: { user: any }) {
     email: user?.email || "nguyenvana@email.com",
     phone: "0123456789",
     fullName: "Nguyễn Văn A",
-    dateOfBirth: "1990-01-15",
+    dateOfBirth: null, // Let DatePicker handle the date format
     address: "123 Đường ABC, Quận 1, TP.HCM",
     bio: "Huấn luyện viên bơi lội với 5 năm kinh nghiệm, chuyên về bơi tự do và bơi bướm.",
     specialties: ["freestyle", "butterfly", "backstroke"],
@@ -137,7 +132,9 @@ function SettingsContent({ user }: { user: any }) {
                   <Form.Item
                     label="Họ và tên"
                     name="fullName"
-                    rules={[{ required: true }]}
+                    rules={[
+                      { required: true, message: "Vui lòng nhập họ và tên" },
+                    ]}
                   >
                     <Input placeholder="Nhập họ và tên" />
                   </Form.Item>
@@ -146,7 +143,12 @@ function SettingsContent({ user }: { user: any }) {
                   <Form.Item
                     label="Tên đăng nhập"
                     name="username"
-                    rules={[{ required: true }]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Vui lòng nhập tên đăng nhập",
+                      },
+                    ]}
                   >
                     <Input placeholder="Nhập tên đăng nhập" />
                   </Form.Item>
@@ -158,7 +160,10 @@ function SettingsContent({ user }: { user: any }) {
                   <Form.Item
                     label="Email"
                     name="email"
-                    rules={[{ required: true, type: "email" }]}
+                    rules={[
+                      { required: true, message: "Vui lòng nhập email" },
+                      { type: "email", message: "Email không hợp lệ" },
+                    ]}
                   >
                     <Input placeholder="Nhập email" />
                   </Form.Item>
@@ -167,7 +172,12 @@ function SettingsContent({ user }: { user: any }) {
                   <Form.Item
                     label="Số điện thoại"
                     name="phone"
-                    rules={[{ required: true }]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Vui lòng nhập số điện thoại",
+                      },
+                    ]}
                   >
                     <Input placeholder="Nhập số điện thoại" />
                   </Form.Item>
@@ -175,7 +185,7 @@ function SettingsContent({ user }: { user: any }) {
               </Row>
 
               <Form.Item label="Ngày sinh" name="dateOfBirth">
-                <DatePicker className="w-full" />
+                <DatePicker className="w-full" format="DD/MM/YYYY" />
               </Form.Item>
 
               <Form.Item label="Địa chỉ" name="address">
@@ -233,7 +243,12 @@ function SettingsContent({ user }: { user: any }) {
               <Form.Item
                 label="Mật khẩu hiện tại"
                 name="currentPassword"
-                rules={[{ required: true }]}
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập mật khẩu hiện tại",
+                  },
+                ]}
               >
                 <Input.Password
                   placeholder="Nhập mật khẩu hiện tại"
@@ -258,7 +273,9 @@ function SettingsContent({ user }: { user: any }) {
               <Form.Item
                 label="Mật khẩu mới"
                 name="newPassword"
-                rules={[{ required: true }]}
+                rules={[
+                  { required: true, message: "Vui lòng nhập mật khẩu mới" },
+                ]}
               >
                 <Input.Password
                   placeholder="Nhập mật khẩu mới"
@@ -277,7 +294,9 @@ function SettingsContent({ user }: { user: any }) {
               <Form.Item
                 label="Xác nhận mật khẩu"
                 name="confirmPassword"
-                rules={[{ required: true }]}
+                rules={[
+                  { required: true, message: "Vui lòng xác nhận mật khẩu" },
+                ]}
               >
                 <Input.Password
                   placeholder="Nhập lại mật khẩu mới"
@@ -727,5 +746,24 @@ function SettingsContent({ user }: { user: any }) {
         </Tabs>
       </div>
     </div>
+  );
+}
+
+export default function SettingsPage() {
+  const { user } = useAuth();
+  return (
+    <Suspense
+      fallback={
+        <div className="p-4 pt-16 lg:pt-8 md:p-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center">
+              <div className="text-lg text-gray-600">Đang tải...</div>
+            </div>
+          </div>
+        </div>
+      }
+    >
+      <SettingsContent user={user} />
+    </Suspense>
   );
 }
