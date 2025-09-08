@@ -71,11 +71,11 @@ export function Sidebar({ userRole }: SidebarProps) {
       icon: <MdGroup />,
       label: <Link href="/instructor/attendance">Điểm danh</Link>,
     },
-    {
-      key: "/instructor/earnings",
-      icon: <MdAttachMoney />,
-      label: <Link href="/instructor/earnings">Thu nhập</Link>,
-    },
+    // {
+    //   key: "/instructor/earnings",
+    //   icon: <MdAttachMoney />,
+    //   label: <Link href="/instructor/earnings">Thu nhập</Link>,
+    // },
     {
       key: "/instructor/reports",
       icon: <MdBarChart />,

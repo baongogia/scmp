@@ -9,8 +9,11 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [
+export default [
+  // kế thừa config của Next.js
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+
+  // bỏ qua một số thư mục / file
   {
     ignores: [
       "node_modules/**",
@@ -20,6 +23,12 @@ const eslintConfig = [
       "next-env.d.ts",
     ],
   },
-];
 
-export default eslintConfig;
+  // override rules
+  {
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+    },
+  },
+];

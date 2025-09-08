@@ -220,105 +220,109 @@ function CoursesContent({ user }: { user: any }) {
     return matchesSearch && matchesLevel && matchesStatus;
   });
 
-  const courseColumns = [
+  const courseColumns: ColDef<any>[] = [
     {
-      title: "Khóa học",
-      key: "course",
-      render: (record: any) => (
+      headerName: "Khóa học",
+      field: "course",
+      cellRenderer: (params: any) => (
         <div className="flex items-center space-x-3">
           <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
             <MdBook className="text-white text-lg" />
           </div>
           <div>
             <Text strong className="text-sm">
-              {record.name}
+              {params.data.name}
             </Text>
             <br />
             <Text type="secondary" className="text-xs">
-              {record.description}
+              {params.data.description}
             </Text>
           </div>
         </div>
       ),
+      width: 300,
     },
     {
-      title: "Cấp độ",
-      dataIndex: "level",
-      key: "level",
-      render: (level: string, record: any) => {
-        const levelData = levels.find((l) => l.name === level);
-        return <Tag color={levelData?.color}>{level}</Tag>;
+      headerName: "Cấp độ",
+      field: "level",
+      cellRenderer: (params: any) => {
+        const levelData = levels.find((l) => l.name === params.value);
+        return <Tag color={levelData?.color}>{params.value}</Tag>;
       },
+      width: 120,
     },
     {
-      title: "Học viên",
-      key: "students",
-      render: (record: any) => (
+      headerName: "Học viên",
+      field: "students",
+      cellRenderer: (params: any) => (
         <div>
           <Text strong>
-            {record.students}/{record.maxStudents}
+            {params.data.students}/{params.data.maxStudents}
           </Text>
           <br />
           <Progress
-            percent={Math.round((record.students / record.maxStudents) * 100)}
+            percent={Math.round(
+              (params.data.students / params.data.maxStudents) * 100
+            )}
             size="small"
             showInfo={false}
           />
         </div>
       ),
+      width: 150,
     },
     {
-      title: "Tiến độ",
-      dataIndex: "progress",
-      key: "progress",
-      render: (progress: number, record: any) => (
+      headerName: "Tiến độ",
+      field: "progress",
+      cellRenderer: (params: any) => (
         <div>
-          <Progress percent={progress} size="small" />
+          <Progress percent={params.value} size="small" />
           <Text className="text-xs text-gray-500">
-            {record.completedLessons}/{record.lessons} buổi
+            {params.data.completedLessons}/{params.data.lessons} buổi
           </Text>
         </div>
       ),
+      width: 160,
     },
     {
-      title: "Đánh giá",
-      dataIndex: "rating",
-      key: "rating",
-      render: (rating: number) => (
+      headerName: "Đánh giá",
+      field: "rating",
+      cellRenderer: (params: any) => (
         <div className="flex items-center">
-          <Rate disabled value={rating} className="text-xs" />
-          <Text className="ml-1 text-xs">{rating}</Text>
+          <Rate disabled value={params.value} className="text-xs" />
+          <Text className="ml-1 text-xs">{params.value}</Text>
         </div>
       ),
+      width: 140,
     },
     {
-      title: "Giá",
-      dataIndex: "price",
-      key: "price",
-      render: (price: number) => (
+      headerName: "Giá",
+      field: "price",
+      cellRenderer: (params: any) => (
         <Text strong className="text-green-600">
-          {price.toLocaleString()} VND
+          {params.value.toLocaleString()} VND
         </Text>
       ),
+      width: 140,
     },
     {
-      title: "Trạng thái",
-      dataIndex: "status",
-      key: "status",
-      render: (status: string) => {
+      headerName: "Trạng thái",
+      field: "status",
+      cellRenderer: (params: any) => {
         const statusConfig = {
           active: { color: "success", text: "Đang diễn ra" },
           upcoming: { color: "processing", text: "Sắp bắt đầu" },
           completed: { color: "default", text: "Đã hoàn thành" },
-        };
-        const config = statusConfig[status as keyof typeof statusConfig];
+        } as const;
+        const config = statusConfig[params.value as keyof typeof statusConfig];
         return <Badge status={config.color as any} text={config.text} />;
       },
+      width: 140,
     },
     {
-      title: "Thao tác",
-      key: "actions",
-      render: (record: any) => (
+      headerName: "Thao tác",
+      field: "actions",
+      cellRenderer: (params: any) => (
         <Space>
           <Tooltip title="Xem chi tiết">
             <Button size="small" icon={<MdVisibility />} />
@@ -328,7 +332,7 @@ function CoursesContent({ user }: { user: any }) {
               size="small"
               icon={<MdEdit />}
               onClick={() => {
-                setSelectedCourse(record);
+                setSelectedCourse(params.data);
                 setEditCourseModalVisible(true);
               }}
             />
@@ -341,6 +345,9 @@ function CoursesContent({ user }: { user: any }) {
           </Tooltip>
         </Space>
       ),
+      sortable: false,
+      filter: false,
+      width: 200,
     },
   ];
 
