@@ -8,8 +8,6 @@ import {
   Row,
   Col,
   Space,
-  Avatar,
-  Table,
   Tag,
   Progress,
   Badge,
@@ -20,13 +18,13 @@ import {
   DatePicker,
   InputNumber,
   message,
-  Tooltip,
   Empty,
   Statistic,
   Divider,
   Tabs,
   Upload,
   Rate,
+  Tooltip,
 } from "antd";
 import {
   MdBook,
@@ -47,6 +45,18 @@ import {
   MdPerson,
 } from "react-icons/md";
 import { useState, useEffect } from "react";
+import {
+  PageHeader,
+  StatsCards,
+  SearchAndFilter,
+  ActionButtons,
+  DataTable,
+  CellRenderers,
+  type StatItem,
+  type FilterOption,
+  type ActionButton,
+} from "@/components/common";
+import { ColDef } from "ag-grid-community";
 
 const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
@@ -398,12 +408,12 @@ function CoursesContent({ user }: { user: any }) {
         </Button>
       </div>
 
-      <Table
-        columns={courseColumns}
-        dataSource={filteredCourses}
-        rowKey="id"
-        pagination={{ pageSize: 10 }}
-        scroll={{ x: 1000 }}
+      <DataTable
+        columnDefs={courseColumns as ColDef<any>[]}
+        rowData={filteredCourses}
+        pagination={true}
+        paginationPageSize={10}
+        getRowId={(params) => params.data.id.toString()}
       />
     </Card>
   );

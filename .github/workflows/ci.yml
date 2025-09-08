@@ -27,19 +27,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # 1) Cài pnpm trước
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+          run_install: false
+
+      # 2) Rồi mới setup Node + bật cache cho pnpm
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "18"
           cache: "pnpm"
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
       - name: Install dependencies
         run: pnpm install
+        env:
+          CI: true
 
       - name: Run linting
         run: pnpm lint
@@ -50,6 +55,7 @@ jobs:
       - name: Run tests
         run: pnpm test
         env:
+          CI: true
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
           NEXTAUTH_SECRET: test-secret
           NEXTAUTH_URL: http://localhost:3000
@@ -57,6 +63,7 @@ jobs:
       - name: Build application
         run: pnpm build
         env:
+          CI: true
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
           NEXTAUTH_SECRET: test-secret
           NEXTAUTH_URL: http://localhost:3000
@@ -69,23 +76,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+          run_install: false
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "18"
           cache: "pnpm"
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
       - name: Install dependencies
         run: pnpm install
+        env:
+          CI: true
 
       - name: Build application
         run: pnpm build
         env:
+          CI: true
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
           NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}

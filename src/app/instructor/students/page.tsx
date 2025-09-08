@@ -9,7 +9,6 @@ import {
   Col,
   Space,
   Avatar,
-  Table,
   Tag,
   Progress,
   Badge,
@@ -19,7 +18,6 @@ import {
   Select,
   DatePicker,
   message,
-  Tooltip,
   Empty,
   Statistic,
   Divider,
@@ -42,6 +40,18 @@ import {
   MdVisibility,
 } from "react-icons/md";
 import { useState, useEffect } from "react";
+import {
+  PageHeader,
+  StatsCards,
+  SearchAndFilter,
+  ActionButtons,
+  DataTable,
+  CellRenderers,
+  type StatItem,
+  type FilterOption,
+  type ActionButton,
+} from "@/components/common";
+import { ColDef } from "ag-grid-community";
 
 const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
@@ -135,33 +145,33 @@ function StudentsContent({ user }: { user: any }) {
     { id: 3, name: "Bơi tự do", level: "Chuyên nghiệp" },
   ];
 
-  const stats = [
+  const stats: StatItem[] = [
     {
       title: "Tổng học viên",
       value: students.length,
       change: "+2",
-      changeType: "positive" as const,
+      changeType: "positive",
       icon: <MdGroup className="text-lg" />,
     },
     {
       title: "Đang học",
       value: students.filter((s) => s.status === "active").length,
       change: "+1",
-      changeType: "positive" as const,
+      changeType: "positive",
       icon: <MdPerson className="text-lg" />,
     },
     {
       title: "Hoàn thành",
       value: students.filter((s) => s.progress === 100).length,
       change: "+3",
-      changeType: "positive" as const,
+      changeType: "positive",
       icon: <MdTrendingUp className="text-lg" />,
     },
     {
       title: "Điểm danh TB",
       value: "87%",
       change: "+5%",
-      changeType: "positive" as const,
+      changeType: "positive",
       icon: <MdAssignment className="text-lg" />,
     },
   ];
@@ -180,182 +190,143 @@ function StudentsContent({ user }: { user: any }) {
     return matchesSearch && matchesCourse && matchesStatus;
   });
 
-  const studentColumns = [
+  const studentColumns: ColDef[] = [
     {
-      title: "Học viên",
-      key: "student",
-      render: (record: any) => (
-        <div className="flex items-center space-x-3">
-          <Avatar size={40}>{record.name.charAt(0)}</Avatar>
-          <div>
-            <Text strong className="text-sm">
-              {record.name}
-            </Text>
-            <br />
-            <Text type="secondary" className="text-xs">
-              {record.email}
-            </Text>
-          </div>
-        </div>
-      ),
+      headerName: "Học viên",
+      field: "student",
+      cellRenderer: CellRenderers.AvatarWithInfo,
+      valueGetter: (params) => ({
+        name: params.data.name,
+        email: params.data.email,
+        avatar: params.data.avatar,
+      }),
+      width: 200,
     },
     {
-      title: "Khóa học",
-      dataIndex: "course",
-      key: "course",
-      render: (course: string) => <Tag color="blue">{course}</Tag>,
+      headerName: "Khóa học",
+      field: "course",
+      cellRenderer: (params: any) => <Tag color="blue">{params.value}</Tag>,
+      width: 120,
     },
     {
-      title: "Tiến độ",
-      dataIndex: "progress",
-      key: "progress",
-      render: (progress: number, record: any) => (
-        <div>
-          <Progress percent={progress} size="small" />
-          <Text className="text-xs text-gray-500">
-            {record.completedLessons}/{record.totalLessons} buổi
-          </Text>
-        </div>
-      ),
+      headerName: "Tiến độ",
+      field: "progress",
+      cellRenderer: CellRenderers.ProgressBar,
+      valueGetter: (params) => ({
+        value: params.data.completedLessons,
+        total: params.data.totalLessons,
+        showPercentage: true,
+      }),
+      width: 150,
     },
     {
-      title: "Điểm danh",
-      dataIndex: "attendance",
-      key: "attendance",
-      render: (attendance: number) => (
-        <Text className={attendance >= 80 ? "text-green-600" : "text-red-600"}>
-          {attendance}%
-        </Text>
+      headerName: "Điểm danh",
+      field: "attendance",
+      cellRenderer: (params: any) => (
+        <span
+          className={params.value >= 80 ? "text-green-600" : "text-red-600"}
+        >
+          {params.value}%
+        </span>
       ),
+      width: 100,
     },
     {
-      title: "Đánh giá",
-      dataIndex: "rating",
-      key: "rating",
-      render: (rating: number) => (
-        <div className="flex items-center">
-          <span className="text-yellow-500 mr-1">★</span>
-          <Text>{rating}</Text>
-        </div>
-      ),
+      headerName: "Đánh giá",
+      field: "rating",
+      cellRenderer: CellRenderers.Rating,
+      width: 100,
     },
     {
-      title: "Trạng thái",
-      dataIndex: "status",
-      key: "status",
-      render: (status: string) => (
-        <Badge
-          status={status === "active" ? "success" : "default"}
-          text={status === "active" ? "Đang học" : "Tạm dừng"}
-        />
-      ),
+      headerName: "Trạng thái",
+      field: "status",
+      cellRenderer: CellRenderers.StatusBadge,
+      valueGetter: (params) => ({
+        status: params.data.status,
+        statusMap: {
+          active: { color: "success", text: "Đang học" },
+          inactive: { color: "default", text: "Tạm dừng" },
+        },
+      }),
+      width: 120,
     },
     {
-      title: "Thao tác",
-      key: "actions",
-      render: (record: any) => (
-        <Space>
-          <Tooltip title="Xem chi tiết">
-            <Button size="small" icon={<MdVisibility />} />
-          </Tooltip>
-          <Tooltip title="Chỉnh sửa">
-            <Button
-              size="small"
-              icon={<MdEdit />}
-              onClick={() => {
-                setSelectedStudent(record);
-                setEditStudentModalVisible(true);
-              }}
-            />
-          </Tooltip>
-          <Tooltip title="Điểm danh">
-            <Button
-              size="small"
-              icon={<MdAssignment />}
-              onClick={() => {
-                setSelectedStudent(record);
-                setAttendanceModalVisible(true);
-              }}
-            />
-          </Tooltip>
-          <Tooltip title="Phản hồi">
-            <Button size="small" icon={<MdFeedback />} />
-          </Tooltip>
-        </Space>
-      ),
+      headerName: "Thao tác",
+      field: "actions",
+      cellRenderer: (params: any) => {
+        const actions: ActionButton[] = [
+          {
+            key: "view",
+            icon: <MdVisibility />,
+            tooltip: "Xem chi tiết",
+            onClick: () => console.log("View", params.data),
+          },
+          {
+            key: "edit",
+            icon: <MdEdit />,
+            tooltip: "Chỉnh sửa",
+            onClick: () => {
+              setSelectedStudent(params.data);
+              setEditStudentModalVisible(true);
+            },
+          },
+          {
+            key: "attendance",
+            icon: <MdAssignment />,
+            tooltip: "Điểm danh",
+            onClick: () => {
+              setSelectedStudent(params.data);
+              setAttendanceModalVisible(true);
+            },
+          },
+          {
+            key: "feedback",
+            icon: <MdFeedback />,
+            tooltip: "Phản hồi",
+            onClick: () => console.log("Feedback", params.data),
+          },
+        ];
+        return <ActionButtons actions={actions} />;
+      },
+      width: 200,
+      sortable: false,
+      filter: false,
     },
   ];
 
-  const renderStatsCards = () => (
-    <Row gutter={[16, 16]} className="mb-6">
-      {stats.map((stat, index) => (
-        <Col xs={12} sm={12} md={6} lg={6} key={index}>
-          <Card className="h-full">
-            <div className="flex items-center justify-between mb-4">
-              <Title level={5} className="text-sm font-medium mb-0">
-                {stat.title}
-              </Title>
-              <div className="text-blue-600">{stat.icon}</div>
-            </div>
-            <div className="text-2xl font-bold mb-2">{stat.value}</div>
-            <Text className="text-xs text-gray-500">
-              <span
-                className={
-                  stat.changeType === "positive"
-                    ? "text-green-600"
-                    : "text-red-600"
-                }
-              >
-                {stat.change}
-              </span>{" "}
-              so với tháng trước
-            </Text>
-          </Card>
-        </Col>
-      ))}
-    </Row>
-  );
+  const filterOptions: FilterOption[] = courses.map((course) => ({
+    value: course.id.toString(),
+    label: course.name,
+  }));
 
   const renderStudentList = () => (
     <Card>
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-          <Input
-            placeholder="Tìm kiếm học viên..."
-            prefix={<MdSearch />}
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            className="w-full sm:w-64"
-          />
-          <Select
-            placeholder="Lọc theo khóa học"
-            value={filterCourse}
-            onChange={setFilterCourse}
-            allowClear
-            className="w-full sm:w-48"
+      <SearchAndFilter
+        searchPlaceholder="Tìm kiếm học viên..."
+        searchValue={searchText}
+        onSearchChange={setSearchText}
+        filterOptions={filterOptions}
+        filterValue={filterCourse}
+        onFilterChange={setFilterCourse}
+        filterPlaceholder="Lọc theo khóa học"
+        actions={
+          <Button
+            type="primary"
+            icon={<MdAdd />}
+            onClick={() => setAddStudentModalVisible(true)}
           >
-            {courses.map((course) => (
-              <Select.Option key={course.id} value={course.id.toString()}>
-                {course.name}
-              </Select.Option>
-            ))}
-          </Select>
-        </div>
-        <Button
-          type="primary"
-          icon={<MdAdd />}
-          onClick={() => setAddStudentModalVisible(true)}
-        >
-          Thêm học viên
-        </Button>
-      </div>
+            Thêm học viên
+          </Button>
+        }
+      />
 
-      <Table
-        columns={studentColumns}
-        dataSource={filteredStudents}
-        rowKey="id"
-        pagination={{ pageSize: 10 }}
-        scroll={{ x: 800 }}
+      <DataTable
+        rowData={filteredStudents}
+        columnDefs={studentColumns}
+        height={500}
+        pagination={true}
+        paginationPageSize={10}
+        getRowId={(params) => params.data.id.toString()}
       />
     </Card>
   );
@@ -363,31 +334,20 @@ function StudentsContent({ user }: { user: any }) {
   return (
     <div className="p-4 pt-16 lg:pt-8 md:p-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6 md:mb-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <Title
-                level={1}
-                className="text-gray-900 mb-2 text-lg md:text-2xl lg:text-3xl"
-              >
-                Quản lý học viên
-              </Title>
-              <Paragraph className="text-gray-600 mb-0">
-                Theo dõi tiến độ và thông tin học viên của bạn
-              </Paragraph>
-            </div>
-            <Space>
+        <PageHeader
+          title="Quản lý học viên"
+          description="Theo dõi tiến độ và thông tin học viên của bạn"
+          actions={
+            <>
               <Button icon={<MdFilterList />}>Bộ lọc</Button>
               <Button type="primary" icon={<MdAssignment />}>
                 Điểm danh hàng loạt
               </Button>
-            </Space>
-          </div>
-        </div>
+            </>
+          }
+        />
 
-        {/* Stats */}
-        {renderStatsCards()}
+        <StatsCards stats={stats} />
 
         {/* Main Content */}
         <Tabs activeKey={activeTab} onChange={setActiveTab} size="large">
