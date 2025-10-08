@@ -1,2 +1,1 @@
-# swim-course-instructors
 # scmp
