@@ -1,7 +1,7 @@
-export { default as HeroSection } from "./HeroSection";
-export { default as StorySection } from "./StorySection";
-export { default as CoursesSection } from "./CoursesSection";
-export { default as InstructorsSection } from "./InstructorsSection";
-export { default as FacilitiesSection } from "./FacilitiesSection";
-export { default as TestimonialsSection } from "./TestimonialsSection";
-export { default as ContactSection } from "./ContactSection";
+export { HeroSection } from "./hero";
+export { StorySection } from "./story";
+export { CoursesSection } from "./courses";
+export { InstructorsSection } from "./instructors";
+export { FacilitiesSection } from "./facilities";
+export { TestimonialsSection } from "./testimonials";
+export { ContactSection } from "./contact";
