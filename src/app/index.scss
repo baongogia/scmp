@@ -1,0 +1,32 @@
+// Custom SCSS styles for Swim Landing Page
+// This file can be used for additional custom styles that complement Tailwind CSS
+
+// Import any custom fonts or additional styles here
+// Example: @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+// Custom component styles
+.swim-hero {
+  // Custom hero section styles if needed
+}
+
+.swim-card {
+  // Custom card styles if needed
+}
+
+// Utility classes
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bg-water-pattern {
+  background-image: radial-gradient(
+      circle at 20% 80%,
+      rgba(0, 102, 204, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(0, 153, 230, 0.1) 0%,
+      transparent 50%
+    );
+}
