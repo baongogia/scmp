@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, MouseEvent } from "react";
 import { useScrollAnimation } from "../../../hooks/useScrollAnimation";
 import {
   FaUserPlus,
@@ -57,6 +57,7 @@ const steps = [
 const TimelineSection: React.FC = () => {
   const [ref, visible] = useScrollAnimation(0.2);
   const listRef = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = listRef.current;
@@ -69,16 +70,11 @@ const TimelineSection: React.FC = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          const el = entry.target as HTMLElement;
           if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            const side = el.dataset.side;
-            if (side === "left") {
-              el.classList.add("animate-slide-in-left");
-            } else {
-              el.classList.add("animate-slide-in-right");
-            }
             el.classList.add("revealed");
-            observer.unobserve(entry.target as Element);
+          } else {
+            el.classList.remove("revealed");
           }
         });
       },
@@ -89,12 +85,61 @@ const TimelineSection: React.FC = () => {
     );
 
     cards.forEach((el) => {
-      el.classList.add("scroll-reveal");
+      const side = el.dataset.side;
+      if (side === "left") {
+        el.classList.add("reveal-left");
+      } else {
+        el.classList.add("reveal-right");
+      }
       observer.observe(el);
     });
 
     return () => observer.disconnect();
   }, []);
+
+  // Parallax for vertical timeline line
+  useEffect(() => {
+    const sectionEl = ref.current;
+    const lineEl = lineRef.current;
+    if (!sectionEl || !lineEl) return;
+
+    const handleScroll = () => {
+      const rect = sectionEl.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      const sectionHeight = rect.height || 1;
+      const progress = Math.min(
+        1,
+        Math.max(0, 1 - (rect.top + sectionHeight) / (vh + sectionHeight))
+      );
+      const offset = (progress - 0.5) * -80;
+      lineEl.style.transform = `translateY(${offset}px)`;
+      lineEl.style.opacity = String(0.6 + progress * 0.4);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [ref]);
+
+  // Hover tilt handlers
+  const handleTiltMove = (e: MouseEvent<HTMLDivElement>) => {
+    const target = e.currentTarget;
+    const rect = target.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const rotateX = (y / rect.height - 0.5) * -6;
+    const rotateY = (x / rect.width - 0.5) * 6;
+    target.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  };
+
+  const handleTiltLeave = (e: MouseEvent<HTMLDivElement>) => {
+    const target = e.currentTarget;
+    target.style.transform = "rotateX(0deg) rotateY(0deg)";
+  };
 
   return (
     <section
@@ -122,7 +167,10 @@ const TimelineSection: React.FC = () => {
 
         <div ref={listRef} className="relative">
           {/* Vertical line */}
-          <div className="absolute left-1/2 -translate-x-1/2 h-full w-px bg-gradient-to-b from-primary-500/0 via-primary-500/40 to-primary-500/0" />
+          <div
+            ref={lineRef}
+            className="absolute left-1/2 -translate-x-1/2 h-full w-px bg-gradient-to-b from-primary-500/0 via-primary-500/40 to-primary-500/0 will-change-transform"
+          />
 
           <ul className="space-y-12">
             {steps.map(({ title, description, Icon }, index) => {
@@ -141,8 +189,10 @@ const TimelineSection: React.FC = () => {
                     <div
                       data-timeline-card
                       data-side={isLeft ? "left" : "right"}
-                      className="glass rounded-2xl p-6 md:p-8 hover-glow transition-all duration-700 scroll-reveal"
+                      className="glass rounded-2xl p-6 md:p-8 hover-glow transition-all duration-700 will-change-transform"
                       style={{ transitionDelay: `${index * 80}ms` }}
+                      onMouseMove={handleTiltMove}
+                      onMouseLeave={handleTiltLeave}
                     >
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-br from-primary-500 to-ocean-500 text-white shadow-xl">
