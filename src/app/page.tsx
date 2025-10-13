@@ -3,6 +3,7 @@ import React from "react";
 import {
   HeroSection,
   StorySection,
+  TimelineSection,
   CoursesSection,
   InstructorsSection,
   FacilitiesSection,
@@ -16,6 +17,7 @@ const HomePage = () => {
     <div className="min-h-screen">
       <HeroSection />
       <StorySection />
+      <TimelineSection />
       <CoursesSection />
       <InstructorsSection />
       <FacilitiesSection />

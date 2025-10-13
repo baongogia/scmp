@@ -13,6 +13,7 @@ import {
   FaPlay,
 } from "react-icons/fa";
 import { Waves, Droplets, Sparkles, ChevronDown } from "lucide-react";
+import CircularText from "@/components/layout/animation/text/CircularText";
 
 const HeroSection = () => {
   const scrollY = useScrollPosition();
@@ -24,7 +25,6 @@ const HeroSection = () => {
 
   return (
     <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
-      {/* Animated Background */}
       {/* gradient-water */}
       <div
         style={{
@@ -33,6 +33,13 @@ const HeroSection = () => {
         }}
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
       >
+        <div className="absolute top-0 right-0 transform scale-75">
+          <CircularText
+            text="SCMP*SWIMMING*COURSE*"
+            onHover="speedUp"
+            spinDuration={20}
+          />
+        </div>
         {/* Dark overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/30 via-slate-800/20 to-slate-900/40"></div>
         {/* Floating particles */}
@@ -104,7 +111,7 @@ const HeroSection = () => {
             <div className="glass-hero rounded-2xl p-6 hover:scale-105 group">
               <div className="flex justify-center mb-4">
                 <div className="p-3 rounded-full bg-gradient-to-br from-cyan-400/20 to-blue-500/20 group-hover:from-cyan-400/30 group-hover:to-blue-500/30 transition-all duration-300">
-                  <FaSwimmer className="text-3xl text-white" />
+                  <FaSwimmer className="text-3xl text-white " />
                 </div>
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">
@@ -120,7 +127,7 @@ const HeroSection = () => {
               <div className="flex justify-center mb-4">
                 <div className="p-3 rounded-full bg-gradient-to-br from-yellow-400/20 to-orange-500/20 group-hover:from-yellow-400/30 group-hover:to-orange-500/30 transition-all duration-300">
                   <FaTrophy
-                    className="text-3xl text-white"
+                    className="text-3xl text-white "
                     style={{ animationDelay: "0.5s" }}
                   />
                 </div>
@@ -138,7 +145,7 @@ const HeroSection = () => {
               <div className="flex justify-center mb-4">
                 <div className="p-3 rounded-full bg-gradient-to-br from-green-400/20 to-emerald-500/20 group-hover:from-green-400/30 group-hover:to-emerald-500/30 transition-all duration-300">
                   <FaUsers
-                    className="text-3xl text-white"
+                    className="text-3xl text-white "
                     style={{ animationDelay: "1s" }}
                   />
                 </div>
@@ -152,12 +159,9 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="group relative px-8 py-4 bg-white text-blue-600 font-semibold rounded-full hover:scale-105 hover:shadow-2xl hover:shadow-white/25 transition-all duration-300 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <span className="relative z-10 group-hover:text-white transition-colors duration-300 flex items-center gap-2">
-                <FaUserGraduate />
-                Đăng Ký Ngay
-              </span>
+            <button className="group px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 hover:border-white/50 transition-all duration-300 hover:scale-105 backdrop-blur-sm flex items-center gap-2">
+              <FaUserGraduate className="group-hover:scale-110 transition-transform duration-300" />
+              Đăng Ký Ngay
             </button>
 
             <button className="group px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 hover:border-white/50 transition-all duration-300 hover:scale-105 backdrop-blur-sm flex items-center gap-2">

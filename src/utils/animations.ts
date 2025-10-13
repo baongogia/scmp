@@ -120,3 +120,67 @@ export const floatingAnimation = (
     repeat: -1,
   });
 };
+
+// Global scroll reveal for elements with class `.scroll-reveal`
+// Works when scrolling down and reverses when scrolling up.
+export const initGlobalScrollReveal = (options?: {
+  selector?: string;
+  from?: gsap.TweenVars;
+  to?: gsap.TweenVars;
+  trigger?: Partial<ScrollTrigger.Vars>;
+}) => {
+  if (typeof window === "undefined") return;
+
+  const selector = options?.selector ?? ".scroll-reveal";
+  const fromVars: gsap.TweenVars = options?.from ?? { opacity: 0, y: 50 };
+  const toVars: gsap.TweenVars = options?.to ?? {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    ease: "power2.out",
+  };
+  const triggerDefaults: ScrollTrigger.Vars = {
+    start: "top 80%",
+    end: "bottom 20%",
+    toggleActions: "play none none reverse",
+    // markers: true, // uncomment for debugging
+  };
+
+  const elements = Array.from(document.querySelectorAll<HTMLElement>(selector));
+  elements.forEach((el) => {
+    // Prevent duplicate triggers in Fast Refresh/navigation
+    ScrollTrigger.getAll()
+      .filter((st) => st.trigger === el)
+      .forEach((st) => st.kill());
+
+    if (options?.to) {
+      // Use tween-based reveal when explicit to-vars provided
+      gsap.fromTo(el, fromVars, {
+        ...toVars,
+        scrollTrigger: {
+          trigger: el,
+          ...triggerDefaults,
+          ...(options?.trigger ?? {}),
+        },
+      });
+    } else {
+      // Default: CSS-driven reveal using toggleClass for both directions
+      ScrollTrigger.create({
+        trigger: el,
+        ...triggerDefaults,
+        ...(options?.trigger ?? {}),
+        toggleClass: { targets: el, className: "revealed" },
+      });
+    }
+  });
+
+  // Refresh after images/fonts load to ensure correct start/end
+  ScrollTrigger.refresh();
+};
+
+// Utility to re-init on route changes or dynamic content
+export const reInitScrollReveal = () => {
+  if (typeof window === "undefined") return;
+  ScrollTrigger.getAll().forEach((st) => st.kill());
+  initGlobalScrollReveal();
+};
