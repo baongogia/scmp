@@ -13,6 +13,7 @@ import {
   FaPlay,
 } from "react-icons/fa";
 import { Waves, Droplets, Sparkles, ChevronDown } from "lucide-react";
+import CircularText from "@/components/layout/animation/text/CircularText";
 
 const HeroSection = () => {
   const scrollY = useScrollPosition();
@@ -24,7 +25,6 @@ const HeroSection = () => {
 
   return (
     <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
-      {/* Animated Background */}
       {/* gradient-water */}
       <div
         style={{
@@ -33,6 +33,13 @@ const HeroSection = () => {
         }}
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
       >
+        <div className="absolute top-0 right-0 transform scale-75">
+          <CircularText
+            text="SCMP*SWIMMING*COURSE*"
+            onHover="speedUp"
+            spinDuration={20}
+          />
+        </div>
         {/* Dark overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/30 via-slate-800/20 to-slate-900/40"></div>
         {/* Floating particles */}
@@ -104,7 +111,7 @@ const HeroSection = () => {
             <div className="glass-hero rounded-2xl p-6 hover:scale-105 group">
               <div className="flex justify-center mb-4">
                 <div className="p-3 rounded-full bg-gradient-to-br from-cyan-400/20 to-blue-500/20 group-hover:from-cyan-400/30 group-hover:to-blue-500/30 transition-all duration-300">
-                  <FaSwimmer className="text-3xl text-white" />
+                  <FaSwimmer className="text-3xl text-white " />
                 </div>
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">
@@ -120,7 +127,7 @@ const HeroSection = () => {
               <div className="flex justify-center mb-4">
                 <div className="p-3 rounded-full bg-gradient-to-br from-yellow-400/20 to-orange-500/20 group-hover:from-yellow-400/30 group-hover:to-orange-500/30 transition-all duration-300">
                   <FaTrophy
-                    className="text-3xl text-white"
+                    className="text-3xl text-white "
                     style={{ animationDelay: "0.5s" }}
                   />
                 </div>
@@ -138,7 +145,7 @@ const HeroSection = () => {
               <div className="flex justify-center mb-4">
                 <div className="p-3 rounded-full bg-gradient-to-br from-green-400/20 to-emerald-500/20 group-hover:from-green-400/30 group-hover:to-emerald-500/30 transition-all duration-300">
                   <FaUsers
-                    className="text-3xl text-white"
+                    className="text-3xl text-white "
                     style={{ animationDelay: "1s" }}
                   />
                 </div>
