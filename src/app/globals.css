@@ -1,3 +1,15 @@
+/* Hide vertical scrollbar globally but keep scrolling enabled */
+html,
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Chrome, Safari and other WebKit browsers */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
