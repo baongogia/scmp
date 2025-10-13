@@ -1,17 +1,29 @@
-import Iridescence from "@/components/layout/background/Iridescence";
+"use client";
 import React from "react";
+import {
+  HeroSection,
+  StorySection,
+  CoursesSection,
+  InstructorsSection,
+  FacilitiesSection,
+  TestimonialsSection,
+  ContactSection,
+} from "../components/sections";
+import Footer from "../components/layout/main/Footer";
 
-const page = () => {
+const HomePage = () => {
   return (
-    <div className="h-screen w-screen bg-black">
-      <Iridescence
-        color={[1, 1, 1]}
-        mouseReact={false}
-        amplitude={0.1}
-        speed={1.0}
-      />
+    <div className="min-h-screen">
+      <HeroSection />
+      <StorySection />
+      <CoursesSection />
+      <InstructorsSection />
+      <FacilitiesSection />
+      <TestimonialsSection />
+      <ContactSection />
+      <Footer />
     </div>
   );
 };
 
-export default page;
+export default HomePage;

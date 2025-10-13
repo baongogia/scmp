@@ -1,0 +1,17 @@
+// Utility classes
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bg-water-pattern {
+  background-image: radial-gradient(
+      circle at 20% 80%,
+      rgba(0, 102, 204, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(0, 153, 230, 0.1) 0%,
+      transparent 50%
+    );
+}
