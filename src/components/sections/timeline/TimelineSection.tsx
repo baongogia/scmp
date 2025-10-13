@@ -70,7 +70,14 @@ const TimelineSection: React.FC = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("revealed");
+            const el = entry.target as HTMLElement;
+            const side = el.dataset.side;
+            if (side === "left") {
+              el.classList.add("animate-slide-in-left");
+            } else {
+              el.classList.add("animate-slide-in-right");
+            }
+            el.classList.add("revealed");
             observer.unobserve(entry.target as Element);
           }
         });
@@ -133,6 +140,7 @@ const TimelineSection: React.FC = () => {
                   >
                     <div
                       data-timeline-card
+                      data-side={isLeft ? "left" : "right"}
                       className="glass rounded-2xl p-6 md:p-8 hover-glow transition-all duration-700 scroll-reveal"
                       style={{ transitionDelay: `${index * 80}ms` }}
                     >
