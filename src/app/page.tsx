@@ -13,7 +13,7 @@ import Footer from "../components/layout/main/Footer";
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen gradient-ocean">
+    <div className="min-h-screen">
       <HeroSection />
       <StorySection />
       <CoursesSection />
