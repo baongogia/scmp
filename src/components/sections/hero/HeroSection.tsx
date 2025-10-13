@@ -159,12 +159,9 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="group relative px-8 py-4 bg-white text-blue-600 font-semibold rounded-full hover:scale-105 hover:shadow-2xl hover:shadow-white/25 transition-all duration-300 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <span className="relative z-10 group-hover:text-white transition-colors duration-300 flex items-center gap-2">
-                <FaUserGraduate />
-                Đăng Ký Ngay
-              </span>
+            <button className="group px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 hover:border-white/50 transition-all duration-300 hover:scale-105 backdrop-blur-sm flex items-center gap-2">
+              <FaUserGraduate className="group-hover:scale-110 transition-transform duration-300" />
+              Đăng Ký Ngay
             </button>
 
             <button className="group px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 hover:border-white/50 transition-all duration-300 hover:scale-105 backdrop-blur-sm flex items-center gap-2">
