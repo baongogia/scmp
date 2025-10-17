@@ -4,25 +4,37 @@ import {
   HeroSection,
   StorySection,
   TimelineSection,
-  CoursesSection,
   InstructorsSection,
   FacilitiesSection,
   TestimonialsSection,
+  CoursesSection,
+  EventsSection,
   ContactSection,
 } from "../components/sections";
 import Footer from "../components/layout/main/Footer";
+import ExperienceSections from "@/components/sections/experience/experienceSections";
 
 const HomePage = () => {
   return (
     <div className="min-h-screen">
-      <HeroSection />
+      <section id="hero">
+        <HeroSection />
+      </section>
       <StorySection />
       <TimelineSection />
-      <CoursesSection />
       <InstructorsSection />
       <FacilitiesSection />
+      <ExperienceSections />
+      <section id="events">
+        <EventsSection />
+      </section>
+      <section id="courses">
+        <CoursesSection />
+      </section>
       <TestimonialsSection />
-      <ContactSection />
+      <section id="contact">
+        <ContactSection />
+      </section>
       <Footer />
     </div>
   );
