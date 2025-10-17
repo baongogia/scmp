@@ -1,3 +1,15 @@
+/* Prevent flash of white content during page transitions */
+html {
+  background-color: #082f49;
+  min-height: 100vh;
+}
+
+body {
+  background-color: #082f49;
+  min-height: 100vh;
+  transition: opacity 0.3s ease-in-out;
+}
+
 /* Hide vertical scrollbar globally but keep scrolling enabled */
 html,
 body {
@@ -127,6 +139,68 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
+/* Navigation glass morphism */
+.nav-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-glass-scrolled {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(25px) saturate(200%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Smooth sliding background animation */
+.nav-item-bg {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 9999px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile menu animations */
+.mobile-menu-enter {
+  animation: mobile-menu-slide-down 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.mobile-menu-exit {
+  animation: mobile-menu-slide-up 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes mobile-menu-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 400px;
+  }
+}
+
+@keyframes mobile-menu-slide-up {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 400px;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+    max-height: 0;
+  }
+}
+
 /* Hover glow effect */
 .hover-glow {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -242,8 +316,8 @@ body {
   --tw-aspect-h: 3;
 }
 
-/* Focus styles */
-*:focus {
+/* Focus styles (only show for keyboard users) */
+*:focus-visible {
   outline: 2px solid #0066cc;
   outline-offset: 2px;
 }

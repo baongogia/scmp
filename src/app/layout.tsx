@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./index.scss";
 import GlobalScrollReveal from "@/components/provider/GlobalScrollReveal";
+import Navigation from "@/components/layout/main/Navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,8 +24,10 @@ export default function RootLayout({
     <html lang="vi">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        suppressHydrationWarning
       >
         <GlobalScrollReveal />
+        <Navigation />
         {children}
       </body>
     </html>

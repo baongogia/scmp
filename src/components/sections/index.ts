@@ -2,6 +2,7 @@ export { HeroSection } from "./hero";
 export { StorySection } from "./story";
 export { TimelineSection } from "./timeline";
 export { CoursesSection } from "./courses";
+export { EventsSection } from "./events";
 export { InstructorsSection } from "./instructors";
 export { FacilitiesSection } from "./facilities";
 export { TestimonialsSection } from "./testimonials";
